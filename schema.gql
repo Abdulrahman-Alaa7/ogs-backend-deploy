@@ -1,0 +1,368 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  password: String!
+  role: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ErrorType {
+  message: String!
+  code: String
+}
+
+type LoginResponse {
+  user: User
+  accessToken: String
+  refreshToken: String
+  error: ErrorType
+}
+
+type LogoutResposne {
+  message: String!
+}
+
+type ForgotPasswordResponse {
+  message: String!
+  error: ErrorType
+}
+
+type ResetPasswordResponse {
+  user: User!
+  error: ErrorType
+}
+
+type UpdatePasswordResponse {
+  user: User!
+  error: ErrorType
+}
+
+type MessageResponse {
+  message: String!
+  error: ErrorType
+}
+
+type Setting {
+  id: String!
+  shippingPrice: Int!
+  freeShippingPrice: Int!
+  freeShipDescEn: String!
+  freeShipDescAr: String!
+  addressOgs: String
+  airPlaneMode: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SettingsHero {
+  id: String!
+  image: String
+  titleEn: String!
+  titleAr: String!
+  descEn: String!
+  descAr: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SettingsResponse {
+  settings: Setting!
+  error: ErrorType
+}
+
+type SettingsHeroResponse {
+  settingsHero: SettingsHero!
+  error: ErrorType
+}
+
+type Review {
+  id: String!
+  rating: Float!
+  name: String!
+  message: String!
+  product: Product
+  productId: String!
+  status: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Product {
+  id: String!
+  name: String!
+  mainImage: String
+  images: [String!]
+  descriptionEn: String
+  descriptionAr: String
+  reviews: [Review!]
+  price: Float!
+  estimatedPrice: Float
+  offer: Boolean!
+  aiGen: Boolean!
+  soldOut: Boolean!
+  publicPro: Boolean!
+  purchased: Float!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type ProductWithSug {
+  product: Product
+  randomProducts: [Product!]
+}
+
+type ProductResponse {
+  product: Product!
+  error: ErrorType
+}
+
+type OrderEntity {
+  name: String!
+  id: String!
+  img: String!
+  price: Float!
+  quantity: Float!
+}
+
+type OrdersEntity {
+  id: String!
+  fullName: String!
+  email: String!
+  phone_number: String!
+  secPhone_number: String
+  order: [OrderEntity!]!
+  governorate: String!
+  secGovernorate: String
+  city: String!
+  secCity: String
+  address: String!
+  secAddress: String
+  note: String
+  status: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type RecentOrdersEntity {
+  recentOrders: [OrdersEntity!]!
+  ordersThisMonthCount: Float!
+}
+
+type Notification {
+  id: String!
+  message: String!
+  theId: String!
+  status: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AnalyticsRevenue {
+  currentMonthRevenue: Int!
+  lastMonthRevenue: Int!
+}
+
+type AnalyticsMonthlyOrders {
+  currentMonthOrdersCount: Int!
+  lastMonthOrdersCount: Int!
+}
+
+type TotalRevenueEntity {
+  month: String!
+  total: Float!
+}
+
+type TotalRevenu {
+  chartData: [TotalRevenueEntity!]!
+}
+
+type ReviewCount {
+  counts: [Int!]!
+  totalReviews: Int!
+}
+
+type Query {
+  getLoggedInUser: LoginResponse!
+  logOutUser: LogoutResposne!
+  getUsers: [User!]!
+  getSettings: [Setting!]!
+  getSettingsHero: [SettingsHero!]!
+  getProducts: [Product!]!
+  getProductById(id: String!): Product!
+  getProductsForClients: [Product!]!
+  getProductByIdForClients(id: String!): ProductWithSug!
+  getTopSellingWithLimit: [Product!]!
+  getTopRatedWithLimit: [Product!]!
+  getNewProductsWithLimit: [Product!]!
+  getTopSelling: [Product!]!
+  getTopRated: [Product!]!
+  getOrders: [OrdersEntity!]!
+  getOrderById(id: String!): OrdersEntity!
+  getRecentOrders: RecentOrdersEntity!
+  getNotifications: [Notification!]!
+  getReviewsForAdmin(id: String!): [Review!]!
+  getReviews: [Review!]!
+  getReviewsForUsers(id: String!): [Review!]!
+  getTotalRevenue: AnalyticsRevenue!
+  getMonthlyOrdersCount: AnalyticsMonthlyOrders!
+  getTotalRevenueForLastSixMonths: TotalRevenu!
+  getTotalOrdersForLastSixMonths: TotalRevenu!
+  getReviewCountsForLastSixMonths: ReviewCount!
+}
+
+type Mutation {
+  Login(email: String!, password: String!): LoginResponse!
+  forgotPassword(forgotPasswordDto: ForgotPasswordDto!): ForgotPasswordResponse!
+  resetPassword(resetPasswordDto: ResetPasswordDto!): ResetPasswordResponse!
+  updatePassword(updatePasswordDto: UpdatePasswordDto!): UpdatePasswordResponse!
+  creatSettings(settingsDto: SettingsDto!): SettingsResponse!
+  updateSettings(settingsUpdateDto: SettingsUpdateDto!): SettingsResponse!
+  createSettingsHero(settingsHeroDto: SettingsHeroDto!): SettingsHeroResponse!
+  updateSettingsHero(updateSettingsHeroDto: UpdayteSettingsHeroDto!): SettingsHeroResponse!
+  deleteHero(id: String!): MessageResponse!
+  createProduct(productDto: ProductDto!): ProductResponse!
+  updateProduct(updateProductDto: UpdateProductDto!): ProductResponse!
+  deleteProduct(id: String!): MessageResponse!
+  createOrder(orderDto: OrderDto!): MessageResponse!
+  updateOrder(updateOrderDto: UpdateOrderDto!): OrdersEntity!
+  deleteOrder(id: String!): MessageResponse!
+  updateNotification(id: String!): MessageResponse!
+  updateAllNotification: MessageResponse!
+  createReview(createReviewDto: CreateReviewDto!): MessageResponse!
+  updateReview(updateReviewDto: UpdateReviewDto!): MessageResponse!
+  deleteReview(id: String!): MessageResponse!
+}
+
+input ForgotPasswordDto {
+  email: String!
+}
+
+input ResetPasswordDto {
+  password: String!
+  activationToken: String!
+}
+
+input UpdatePasswordDto {
+  currentPassword: String!
+  newPassword: String!
+}
+
+input SettingsDto {
+  shippingPrice: Float!
+  freeShippingPrice: Float!
+  freeShipDescEn: String!
+  freeShipDescAr: String!
+  addressOgs: String
+  airPlaneMode: Boolean!
+}
+
+input SettingsUpdateDto {
+  id: String!
+  shippingPrice: Float!
+  freeShippingPrice: Float!
+  freeShipDescEn: String!
+  freeShipDescAr: String!
+  addressOgs: String
+  airPlaneMode: Boolean!
+}
+
+input SettingsHeroDto {
+  image: Upload
+  titleEn: String!
+  titleAr: String!
+  descEn: String!
+  descAr: String!
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input UpdayteSettingsHeroDto {
+  id: String!
+  image: Upload
+  titleEn: String!
+  titleAr: String!
+  descEn: String!
+  descAr: String!
+}
+
+input ProductDto {
+  name: String!
+  mainImage: Upload
+  images: [Upload!]
+  descriptionEn: String
+  descriptionAr: String
+  price: Float!
+  estimatedPrice: Float
+  offer: Boolean!
+  aiGen: Boolean!
+  soldOut: Boolean!
+  publicPro: Boolean!
+}
+
+input UpdateProductDto {
+  id: String!
+  name: String!
+  mainImage: Upload
+  images: [Upload!]
+  descriptionEn: String
+  descriptionAr: String
+  price: Float!
+  estimatedPrice: Float
+  offer: Boolean!
+  aiGen: Boolean!
+  soldOut: Boolean!
+  publicPro: Boolean!
+}
+
+input OrderDto {
+  lang: String!
+  fullName: String!
+  email: String!
+  phone_number: String!
+  secPhone_number: String
+  order: [Order!]!
+  governorate: String!
+  secGovernorate: String
+  city: String!
+  secCity: String
+  address: String!
+  secAddress: String
+  note: String
+}
+
+input Order {
+  id: String!
+  name: String!
+  img: String!
+  price: Float!
+  quantity: Float!
+}
+
+input UpdateOrderDto {
+  id: String!
+  status: String!
+}
+
+input CreateReviewDto {
+  rating: Float!
+  name: String!
+  message: String!
+  productId: String!
+}
+
+input UpdateReviewDto {
+  id: String!
+  status: Boolean!
+}

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>تأكيد الطلب</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+      /* Base */
+        body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #fafafa;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f97316;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: #ffffff;
+        text-align: center;
+      }
+      .message-sm {
+        font-size: 18px;
+        margin-bottom: 20px;
+        padding-top: 50px;
+      }
+      .message-sm > h1 {
+        font-size: 25px;
+        font-weight: 600;
+      }
+      .course-info {
+        margin: auto;
+        padding: 20px 0px;
+        width: 100%;
+        background-color: #fff;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 2px 2px 2px 2px rgba(206, 197, 197, 0.1);
+        color: #000;
+        text-align: center;
+      }
+      .course-info > h4 {
+        color: #23bd70;
+        font-size: 22px;
+        font-weight: 500;
+      }
+      table {
+        width: 90%; 
+        margin: 0 auto; 
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      table td {
+        padding: 10px;
+        text-align: center;
+      }
+      .first-td {
+        text-transform: uppercase;
+        color: #0000006c;
+        font-size: 16px;
+        padding: 5px 0px;
+        font-weight: 600 !important;
+      }
+      .second-td {
+        font-weight: 500 !important;
+        color: #000000af;
+        font-size: 15px;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 100px;
+        color: #fff;
+      }
+      .footer a {
+        text-decoration: none;
+        color: #fff;
+      }
+      td.col-2 {
+        width: 100%;
+        text-align: right;
+        padding: 0px;
+        margin: 0px;
+      }
+      .table-row {
+        width: 70%;
+        display: block;
+        margin: auto;
+        padding: 10px 0px;
+      }
+      .uppercase {
+        text-transform: uppercase;
+      }
+    </style>
+  </head>
+  <body dir="rtl">
+    <div class="container">
+      <div class="message-sm" >
+        <h1 >تأكيد طلبك من OGs</h1>
+        <p >  شكرا لطلبك، دلوقتي انت بقيت OG 🫵🤩 </p>
+      </div>
+      <br />
+      <br />
+      <div class="course-info">
+        <h4> اهلاً <%= name %> ، تفاصيل طلبك : </h4>
+        <table style="border-bottom: 1px solid #0000002f">
+          <tr>
+            <td>رقم الطلب #: <span class="uppercase"><%= order.id %></span></td>
+            <td>تاريخ الطلب: <%= order.date %></td>
+          </tr>
+        </table>
+        <table style="margin-top: 8px; ">
+          <tr>
+            <td class="first-td">المنتج</td>
+            <td class="first-td">الكميه</td>
+            <td class="first-td">السعر</td>
+          </tr>
+          <% order.products.forEach(function(product) { %>
+          <tr>
+            <td class="second-td"><%= product.name %></td>
+            <td class="second-td"><%= product.quantity %></td>
+            <td class="second-td">ج.م <%= product.price %></td>
+          </tr>
+          <% }) %>
+        </table>
+        <table class="table-row" style="border-bottom: 1px solid #00000029">
+          <tr>
+            <td class="col-2">الشحن :</td>
+            <td class="col-2">  <%= order.theShippingPrice === 0 ? 'مجاناً' : 'ج.م ' + order.theShippingPrice %> </td>
+          </tr>
+        </table>
+        <table class="table-row" style="margin-top: -20px">
+          <tr>
+            <td class="col-2">المجموع :</td>
+            <td class="col-2">ج.م <%= order.totalPrice %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="footer">
+        <p >
+          لو فيه اي  استفسار عن اي حاجه تقدروا تتواصلوا مع فريق الدعم على 
+          <a href="mailto:ogsgamess@gmail.com">support@OGs.com</a>
+        </p>
+        <p> جميع الحقوق محفوظة  OGs Games &copy;</p>
+      </div>
+    </div>
+  </body>
+</html>

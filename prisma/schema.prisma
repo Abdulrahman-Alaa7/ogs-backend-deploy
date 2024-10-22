@@ -1,0 +1,148 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    Admin
+    User
+}
+
+enum Status {
+    Pending
+    InProgress
+    Done
+    Canceled
+}
+
+model User {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    name      String
+    email     String   @unique
+    password  String
+    role      Role     @default(User)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Settings {
+    id                String   @id @default(auto()) @map("_id") @db.ObjectId
+    shippingPrice     Int?     @unique @default(0)
+    freeShippingPrice Int?     @unique @default(0)
+    freeShipDescEn    String
+    freeShipDescAr    String
+    addressOgs        String?
+    airPlaneMode      Boolean  @default(false)
+    createdAt         DateTime @default(now())
+    updatedAt         DateTime @updatedAt
+}
+
+model SettingsHero {
+    id        String   @id @default(auto()) @map("_id") @db.ObjectId
+    image     String?
+    titleEn   String
+    titleAr   String
+    descEn    String
+    descAr    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Product {
+    id             String   @id @default(auto()) @map("_id") @db.ObjectId
+    name           String
+    mainImage      String?
+    images         String[]
+    descriptionEn  String?
+    descriptionAr  String?
+    price          Int
+    estimatedPrice Int?
+    offer          Boolean  @default(false)
+    aiGen          Boolean  @default(false)
+    soldOut        Boolean  @default(false)
+    publicPro      Boolean  @default(true)
+    purchased      Int      @default(0)
+    reviews        Review[]
+    createdAt      DateTime @default(now())
+    updatedAt      DateTime @updatedAt
+}
+
+model Review {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    rating Int
+
+    name String
+
+    message String
+
+    productId String @db.ObjectId
+
+    product Product @relation(fields: [productId], references: [id])
+
+    status Boolean @default(false)
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+}
+
+model Order {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    fullName String
+
+    email String
+
+    phone_number String
+
+    secPhone_number String?
+
+    order OrderType[]
+
+    governorate String
+
+    secGovernorate String?
+
+    city String
+
+    secCity String?
+
+    address String
+
+    secAddress String?
+
+    note String?
+
+    status Status @default(Pending)
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+}
+
+type OrderType {
+    id       String
+    name     String
+    img      String
+    price    Int
+    quantity Int
+}
+
+model Notification {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+
+    message String
+
+    status Boolean @default(false)
+
+    theId String
+
+    createdAt DateTime @default(now())
+
+    updatedAt DateTime @updatedAt
+}
